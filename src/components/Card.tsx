@@ -28,18 +28,27 @@ const Card: React.FC<CardProps> = ({
   };
 
   const getTextSize = () => {
-    if (size.includes('w-12')) return 'text-lg md:text-xl';
-    if (size.includes('w-14')) return 'text-xl md:text-2xl';
-    if (size.includes('w-16')) return 'text-2xl md:text-3xl';
-    if (size.includes('w-20')) return 'text-2xl md:text-3xl lg:text-4xl';
-    return 'text-3xl md:text-4xl lg:text-5xl';
+    // More responsive text sizing
+    if (size.includes('w-8')) return 'text-xs sm:text-sm';
+    if (size.includes('w-10')) return 'text-sm sm:text-base';
+    if (size.includes('w-12')) return 'text-base sm:text-lg md:text-xl';
+    if (size.includes('w-16')) return 'text-lg sm:text-xl md:text-2xl';
+    if (size.includes('w-20')) return 'text-xl sm:text-2xl md:text-3xl';
+    return 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl';
+  };
+
+  const getPowerBadgeSize = () => {
+    if (size.includes('w-8') || size.includes('w-10')) return 'text-xs px-1 py-0.5';
+    if (size.includes('w-12')) return 'text-xs px-1 py-0.5';
+    return 'text-xs px-1 py-0.5';
   };
 
   return (
     <div
       className={`
         relative ${size} cursor-pointer transition-all duration-300
-        ${card.isMatched ? 'scale-95 opacity-75' : 'hover:scale-105'}
+        ${card.isMatched ? 'scale-95 opacity-75' : 'hover:scale-105 active:scale-95'}
+        touch-manipulation
       `}
       onClick={handleClick}
     >
@@ -52,29 +61,29 @@ const Card: React.FC<CardProps> = ({
       >
         {/* Back of card */}
         <div
-          className="absolute inset-0 w-full h-full rounded-xl backface-hidden
+          className="absolute inset-0 w-full h-full rounded-lg sm:rounded-xl backface-hidden
                      bg-gradient-to-br from-slate-200 to-slate-300 
                      border-2 border-white shadow-lg
                      flex items-center justify-center"
         >
-          <div className="w-1/3 h-1/3 bg-gradient-to-br from-slate-400 to-slate-500 rounded-lg"></div>
+          <div className="w-1/3 h-1/3 bg-gradient-to-br from-slate-400 to-slate-500 rounded-md"></div>
         </div>
 
         {/* Front of card */}
         <div
           className={`
-            absolute inset-0 w-full h-full rounded-xl backface-hidden rotate-y-180
+            absolute inset-0 w-full h-full rounded-lg sm:rounded-xl backface-hidden rotate-y-180
             ${getCardStyle()}
             border-2 border-white shadow-lg
             flex items-center justify-center ${getTextSize()}
             ${card.isPowerCard ? 'animate-pulse' : ''}
           `}
         >
-          <span className="drop-shadow-lg filter">
+          <span className="drop-shadow-lg filter select-none">
             {card.content}
           </span>
           {card.isPowerCard && (
-            <div className="absolute bottom-0.5 right-0.5 text-xs bg-white/20 rounded px-1 py-0.5 text-white font-bold">
+            <div className={`absolute bottom-0.5 right-0.5 ${getPowerBadgeSize()} bg-white/20 rounded text-white font-bold`}>
               POWER
             </div>
           )}

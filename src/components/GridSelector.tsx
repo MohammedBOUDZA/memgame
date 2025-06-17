@@ -44,7 +44,7 @@ const GridSelector: React.FC<GridSelectorProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-3 w-full max-w-xs">
+    <div className="flex flex-col gap-3 w-full">
       <label className="text-white font-semibold text-lg text-center lg:text-left">
         Grid Size
       </label>
@@ -60,7 +60,8 @@ const GridSelector: React.FC<GridSelectorProps> = ({
                 ? 'bg-white/20 border-white shadow-lg scale-105'
                 : 'bg-white/5 border-white/30 hover:bg-white/10 hover:border-white/50'
               }
-              ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:scale-105'}
+              ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:scale-105 active:scale-95'}
+              touch-manipulation
             `}
           >
             <div className="flex flex-col items-center gap-1.5 text-white">
@@ -74,7 +75,7 @@ const GridSelector: React.FC<GridSelectorProps> = ({
               </div>
             </div>
             {selectedGrid === gridKey && (
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full"></div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
             )}
           </button>
         ))}
